@@ -1,0 +1,9 @@
+{
+	"appId": "io.ionic.usr",
+	"appName": "Addinteli saldo",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"server": {
+		"cleartext": true
+	}
+}

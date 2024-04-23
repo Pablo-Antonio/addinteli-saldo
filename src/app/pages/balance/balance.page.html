@@ -1,0 +1,91 @@
+<app-header></app-header>
+
+<ion-content>
+  <app-page-title [title]="title" ></app-page-title>
+  <ion-card>
+    <form [formGroup]="numberForm" (submit)="submit()">
+      <ion-item>
+        <ion-label position="floating">Número</ion-label>
+        <ion-input type="number" formControlName="phone_number" maxlength="32"></ion-input>
+      </ion-item>
+      <ion-button type="submit" expand="block" fill="clear" [disabled]="!numberForm.valid">Enviar</ion-button>
+    </form>
+  </ion-card>
+  
+  <ion-card *ngIf="data">
+    <ion-card-header class="ion-no-padding ion-padding-horizontal ion-padding-top">
+      <ion-card-title>Consumo de: <ion-label [innerHTML]="data.phone_number" color="primary"></ion-label></ion-card-title>
+    </ion-card-header>
+    <ion-list>
+      <ion-item id="days-left">
+        <ion-icon slot="start" src="../../../assets/icon/calendario.svg" color="tertiary"></ion-icon>
+        Vigencia
+        <div slot="end">
+          {{formatDate(data.effective_date) | date: 'shortDate'}} - {{formatDate(data.expire_date) | date: 'shortDate'}}
+        </div>
+      </ion-item>
+      <ion-popover trigger="days-left" side="bottom" size="cover">
+        <ng-template>
+          <ion-item>
+            <ion-label>Te quedan {{data.daysLeft}} días de beneficios</ion-label>
+          </ion-item>
+        </ng-template>
+      </ion-popover>
+
+      <ion-item class="ion-margin-top">
+        <ion-icon slot="start" src="../../../assets/icon/datos.svg" color="primary"></ion-icon>
+        Datos
+        <span slot="end">{{data.data.unused / 1000 | number:'.0-2'}} / {{data.data.total / 1000 | number:'.0-2'}} GB</span>
+      </ion-item>      
+      <ion-progress-bar color="primary" [value]="1 - data.percentData"></ion-progress-bar>
+
+      <ng-container *ngIf="data.data_velRed.total">
+        <ion-item class="ion-margin-top">
+          <ion-icon slot="start" src="../../../assets/icon/datos.svg" color="primary"></ion-icon>
+          Velocidad Reducida
+          <span slot="end">{{data.data_velRed.unused / 1000 | number:'.0-2'}} / {{data.data_velRed.total / 1000 |
+            number:'.0-2'}} GB</span>
+        </ion-item>
+        <ion-progress-bar color="primary" [value]="1 - data.percentVelRed"></ion-progress-bar>
+      </ng-container>
+      
+      <ng-container *ngIf="data.data_thr.total">
+        <ion-item>
+          <ion-icon slot="start" src="../../../assets/icon/puj.svg" color="primary"></ion-icon>
+          Uso Justo
+          <span slot="end">{{data.data_thr.unused / 1000 | number:'.0-2'}} / {{data.data_thr.total / 1000 | number:'.0-2'}} GB</span>
+        </ion-item>
+        <ion-progress-bar color="primary" [value]="1 - data.percentDataThr"></ion-progress-bar>
+      </ng-container>
+      
+      <ng-container *ngIf="data.data_free.total">
+        <ion-item>
+          <ion-icon slot="start" src="../../../assets/icon/promo.svg" color="primary"></ion-icon>
+          Promociones
+          <span slot="end">{{data.data_free.unused / 1000 | number:'.0-2'}} / {{data.data_free.total / 1000 | number:'.0-2'}} GB</span>
+        </ion-item>
+        <ion-progress-bar color="primary" [value]="1 - data.percentDataFree"></ion-progress-bar>
+      </ng-container>
+      
+      <ion-item class="ion-margin-top">
+        <ion-icon slot="start" src="../../../assets/icon/minutos.svg" color="secondary"></ion-icon>
+        Minutos
+        <span slot="end">{{data.min.unused}} de {{data.min.total}} Min</span>
+      </ion-item>
+      <ion-progress-bar color="secondary" [value]="1 - data.percentMin"></ion-progress-bar>
+      <ion-item>
+        <ion-icon slot="start" src="../../../assets/icon/mensajes.svg" color="secondary"></ion-icon>
+        Mensajes
+        <span slot="end">{{data.sms.unused}} de {{data.sms.total}} SMS</span>
+      </ion-item>
+      <ion-progress-bar color="secondary" [value]="1 - data.percentSms"></ion-progress-bar>
+    </ion-list>
+    <ng-container *ngIf="selfConsul == data.phone_number; else self">
+      <ion-button expand="block" fill="clear" (click)="delePNumber()"color="danger">Remover número</ion-button>
+    </ng-container>
+    <ng-template #self>
+      <ion-button expand="block" fill="clear" (click)="savePNumber(data.phone_number)">Guardar número</ion-button>
+    </ng-template>
+  </ion-card>
+</ion-content>
+<app-footer></app-footer>

@@ -1,0 +1,7 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button *ngIf="bkButton" slot="start" defaultHref="/" icon="../../../assets/icon/flecha-back.svg"  text=""></ion-back-button>
+    <ng-content></ng-content>
+    <ion-img *ngIf="bkButton" slot="end" class="ion-margin-end" style="width: 100px;" src="../../../../assets/img/logo_dark.png"></ion-img>
+  </ion-toolbar>
+</ion-header>

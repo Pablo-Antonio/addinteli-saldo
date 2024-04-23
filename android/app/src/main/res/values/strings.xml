@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Addinteli Saldo</string>
+    <string name="title_activity_main">Addinteli Saldo</string>
+    <string name="package_name">io.ionic.usr</string>
+    <string name="custom_url_scheme">io.ionic.usr</string>
+</resources>

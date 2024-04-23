@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<ion-content>
+  <app-page-title [title]="title" ></app-page-title>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>SOPORTE</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Esta aplicación móvil ha sido diseñada y desarrollada por Addinteli. En caso de que tengas alguna duda sobre el funcionamiento o alguna observación para la mejora del servicio, quedamos atentos a tus comentarios.
+      <br>
+      Para más información visita <b style="text-decoration: underline;" (click)="openAdd()">addinteli.com.mx</b>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Deja un comentario</ion-card-title>
+    </ion-card-header>
+    <form [formGroup]="commentForm" (submit)="submit()">
+      <ion-item>
+        <ion-label position="floating">Email del remitente</ion-label>
+        <ion-input formControlName="email" maxlength="128"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Asunto</ion-label>
+        <ion-input formControlName="subject" maxlength="32"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Máximo 250 caracteres</ion-label>
+        <ion-textarea formControlName="comment" maxlength="250"></ion-textarea>
+      </ion-item>
+      <ion-button type="submit" expand="block" fill="clear" [disabled]="!commentForm.valid">Enviar</ion-button>
+    </form>
+  </ion-card>
+</ion-content>
+
+<app-footer></app-footer>
